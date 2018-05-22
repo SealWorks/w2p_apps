@@ -25,6 +25,7 @@ web2py/web2py.py
 web2py/welcome.w2p
 web2py/parameters_*.py
 web2py/app.yaml
+web2py/applications/teste/
 web2py/applications/*/cron/
 web2py/applications/*/errors/
 web2py/applications/*/databases/
