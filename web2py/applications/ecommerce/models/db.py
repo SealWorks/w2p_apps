@@ -24,15 +24,15 @@ if request.global_settings.web2py_version < "2.15.5":
 # -------------------------------------------------------------------------
 # once in production, remove reload=True to gain full speed
 # -------------------------------------------------------------------------
-configuration = AppConfig(reload=True)
+appconfig = AppConfig(reload=True)
 
 if not request.env.web2py_runtime_gae:
     # ---------------------------------------------------------------------
     # if NOT running on Google App Engine use SQLite or other DB
     # ---------------------------------------------------------------------
-    db = DAL(configuration.get('db.uri'),
-             pool_size=configuration.get('db.pool_size'),
-             migrate_enabled=configuration.get('db.migrate'),
+    db = DAL(appconfig.get('db.uri'),
+             pool_size=appconfig.get('db.pool_size'),
+             migrate_enabled=appconfig.get('db.migrate'),
              check_reserved=['all'])
 else:
     # ---------------------------------------------------------------------
@@ -55,7 +55,7 @@ else:
 # none otherwise. a pattern can be 'controller/function.extension'
 # -------------------------------------------------------------------------
 response.generic_patterns = [] 
-if request.is_local and not configuration.get('app.production'):
+if request.is_local and not appconfig.get('app.production'):
     response.generic_patterns.append('*')
 
 # -------------------------------------------------------------------------
@@ -86,7 +86,7 @@ response.form_label_separator = ''
 # -------------------------------------------------------------------------
 
 # host names must be a list of allowed host names (glob syntax allowed)
-auth = Auth(db, host_names=configuration.get('host.names'))
+auth = Auth(db, host_names=appconfig.get('host.names'))
 
 # -------------------------------------------------------------------------
 # create all tables needed by auth, maybe add a list of extra fields
@@ -98,11 +98,11 @@ auth.define_tables(username=False, signature=False)
 # configure email
 # -------------------------------------------------------------------------
 mail = auth.settings.mailer
-mail.settings.server = 'logging' if request.is_local else configuration.get('smtp.server')
-mail.settings.sender = configuration.get('smtp.sender')
-mail.settings.login = configuration.get('smtp.login')
-mail.settings.tls = configuration.get('smtp.tls') or False
-mail.settings.ssl = configuration.get('smtp.ssl') or False
+mail.settings.server = 'logging' if request.is_local else appconfig.get('smtp.server')
+mail.settings.sender = appconfig.get('smtp.sender')
+mail.settings.login = appconfig.get('smtp.login')
+mail.settings.tls = appconfig.get('smtp.tls') or False
+mail.settings.ssl = appconfig.get('smtp.ssl') or False
 
 # -------------------------------------------------------------------------
 # configure auth policy
@@ -114,20 +114,20 @@ auth.settings.reset_password_requires_verification = True
 # -------------------------------------------------------------------------  
 # read more at http://dev.w3.org/html5/markup/meta.name.html               
 # -------------------------------------------------------------------------
-response.meta.author = configuration.get('app.author')
-response.meta.description = configuration.get('app.description')
-response.meta.keywords = configuration.get('app.keywords')
-response.meta.generator = configuration.get('app.generator')
+response.meta.author = appconfig.get('app.author')
+response.meta.description = appconfig.get('app.description')
+response.meta.keywords = appconfig.get('app.keywords')
+response.meta.generator = appconfig.get('app.generator')
 
 # -------------------------------------------------------------------------
 # your http://google.com/analytics id                                      
 # -------------------------------------------------------------------------
-response.google_analytics_id = configuration.get('google.analytics_id')
+response.google_analytics_id = appconfig.get('google.analytics_id')
 
 # -------------------------------------------------------------------------
 # maybe use the scheduler
 # -------------------------------------------------------------------------
-if configuration.get('scheduler.enabled'):
+if appconfig.get('scheduler.enabled'):
     from gluon.scheduler import Scheduler
     scheduler = Scheduler(db, heartbeat=configure.get('heartbeat'))
 
