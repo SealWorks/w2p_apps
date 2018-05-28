@@ -13,7 +13,7 @@ response.menu = [
 # provide shortcuts for development. you can remove everything below in production
 # ----------------------------------------------------------------------------------------------------------------------
 
-if not configuration.get('app.production'):
+if not appconfig.get('app.production'):
     _app = request.application
     response.menu += [
         (T('My Sites'), False, URL('admin', 'default', 'site')),
@@ -107,4 +107,3 @@ if not configuration.get('app.production'):
              'http://webchat.freenode.net/?channels=web2py'),
         ]),
     ]
-

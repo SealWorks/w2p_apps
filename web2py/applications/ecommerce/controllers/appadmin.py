@@ -26,7 +26,7 @@ try:
              socket.gethostbyname(http_host),
              '::1', '127.0.0.1', '::ffff:127.0.0.1')
 except:
-    hosts = (http_host, )
+    hosts = (http_host,)
 
 if request.is_https:
     session.secure()
