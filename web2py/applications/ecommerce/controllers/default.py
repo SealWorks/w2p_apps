@@ -2,6 +2,7 @@
 
 
 def index():
+    response.flash = "Somente um teste"
     return dict(message="hello from default.py")
 
 
