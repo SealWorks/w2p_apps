@@ -1,69 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>{{=response.title or appconfig.get('app.name')}}</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="{{=STATIC('materialize/1.0.0/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="{{=STATIC('app/style.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{=STATIC('materialize/1.0.0/materialize.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{{=STATIC('app/style.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-  {{include 'web2py_ajax.html'}}
+    {{include 'web2py_ajax.html'}}
 </head>
 <body>
-  <nav class="light-blue darken-4" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
 
-  {{include}}
-
-  <footer class="page-footer orange">
+  <ul id="main-nav" class="sidenav sidenav-fixed">
+    <li><a class="brand-logo" href="{{=URL('default', 'index')}}"><img class="responsive-img" src="{{=STATIC("tmp/logo.png")}}"></a></li>
+    <li><br></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
+  <ul id="user-nav" class="sidenav" data-edge="right">
+    {{if auth.user_id:}}
+      <li>
+        <div class="user-view">
+          <div class="background"><img src="{{=STATIC('tmp/bg.png')}}"></div>
+          <a href="#user"><img class="circle" src="{{=STATIC('tmp/user.jpg')}}"></a>
+          <a href="#name"><span class="white-text name">Jaiminho</span></a>
+          <a href="#email"><span class="white-text email">jaiminho@gmail.com</span></a>
+        </div>
+      </li>
+      <li><a href="{{=URL('default', 'user', args='logout')}}"><i class="material-icons">exit_to_app</i>Logout</a></li>
+      <li><div class="divider"></div></li>
+      <li><a href="#!"><i class="material-icons">shopping_cart</i>Ir ao caixa</a></li>
+      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    {{else:}}
+      <li>
+        <div class="user-view">
+          <span>Faça o login ou registre-se</span>
+        </div>
+      </li>
+      <li><a href="{{=URL('default', 'user', args='login')}}"><i class="material-icons">input</i>Login</a></li>
+      <li><a href="{{=URL('default', 'user', args='register')}}"><i class="material-icons">format_align_justify</i>Registrar</a></li>
+    {{pass}}
+  </ul>
+  <header>
+    <nav class="top-nav">
+      <div class="container">
+        <div class="nav-wrapper">
+          <div class="row">
+            <div class="col s12">
+              <span class="breadcrumb">
+                <span class="hide-on-small-and-down"> {{=appconfig.get('app.name')}}</span>
+                <span class="hide-on-med-and-up"> {{=appconfig.get('app.name')}} long long long text</span>
+              </span>
+              <span class="breadcrumb hide-on-med-and-down">pagina de login </span>
+              <span class="breadcrumb hide-on-small-and-down">pagina de registro</span>
+              <ul class="left">
+                <li><a href="#" data-target="main-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a></li>
+              </ul>
+              <ul class="right">
+                <li>
+                  <a href="#" data-target="user-nav" class="sidenav-trigger show-on-medium-and-up">
+                    {{if auth.user_id:}}
+                      <i class="material-icons left">shopping_cart</i>
+                      <span class="new badge blue hide-on-small-and-down" data-badge-caption="itens">1</span>
+                    {{else:}}
+                      <i class="material-icons">account_box</i>
+                    {{pass}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    {{include}}
+  </main>
+  <footer class="page-footer">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
+          <h5 class="white-text">Footer Content</h5>
+          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
         </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="footer-copyright">
-      <div class="container">
-      <a class="orange-text text-lighten-3" href="http://fikdik.com.br">#FIKDIK</a>
+      <div class="container white-text">
+      © 2017 - <script>document.write(new Date().getFullYear());</script> {{=T('Copyright')}}
+      <a class="white-text right" href="http://fikdik.com.br" target="_blank">FIKDIK</a>
       </div>
     </div>
   </footer>
-
-
   <!--  Scripts-->
   <script src="{{=STATIC('jquery/jquery-2.1.1.min.js')}}"></script>
   <script src="{{=STATIC('materialize/1.0.0/materialize.min.js')}}"></script>
@@ -71,5 +115,5 @@
   <script src="{{=STATIC('app/init.js')}}"></script>
   {{block page_js}}
   {{end page_js}}
-  </body>
+</body>
 </html>

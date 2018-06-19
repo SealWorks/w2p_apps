@@ -67,3 +67,4 @@ auth.settings.reset_password_requires_verification = True
 from plugin_materialize import *
 response.formstyle = formstyle_materialize
 auth.settings.formstyle = formstyle_materialize
+
