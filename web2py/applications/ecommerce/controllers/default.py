@@ -23,4 +23,11 @@ def user():
     to decorate functions that need access control
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
+    if(request.args(0)=='profile'): redirect(URL('default','profile'))
     return dict(form=auth())
+
+@auth.requires_login()
+def profile():
+    #auth.user é o objeto que contem os dados do usuário logado guardados na tabela auth_user
+    form = SQLFORM(db.clients, db.auth_user)
+    return dict(form = form)

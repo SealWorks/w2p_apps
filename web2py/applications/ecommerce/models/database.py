@@ -14,14 +14,18 @@ Suppliers = db.define_table('loja_suppliers',
                             Field('email', 'string', label='E-mail', requires=IS_EMAIL(error_message='invalid email!'))
                             )
 
-Clients = db.define_table('plugin_iugu_clients',
-                          Field('name', label='Nome/Razão Social'),
+Clients = db.define_table('clients',
+                          Field('user_id','reference auth_user'),
                           Field('cpf_cnpj', label='CPF/CNPJ'),
                           Field('iss', 'integer', label='ISS'),
-                          # ---------------------contato
-                          Field('email', 'string', label='E-mail'),
                           Field('phone_prefix', 'string', label=T('Phone Prefix')),
-                          Field('phone', 'string', label=T('Telephone')),
+                          Field('phone', 'string', label=T('Telephone'))
+                          )
+
+Address = db.define_table('client_address',
+                          Field('client','reference clients'),
+                          Field('type_add','list:string'),
+                          #---dados do enderesso
                           Field('zip', 'string', label=T('ZIP')),
                           Field('street', 'string', label=T('Street')),
                           Field('home_number', 'string', label=T('Number')),
@@ -31,10 +35,26 @@ Clients = db.define_table('plugin_iugu_clients',
                           Field('country', 'string', label=T('Country')),
                           Field('complement', 'string', label=T('Comnplement'))
                           )
+# BODY PARAMS
+# Email do cliente	OBRIGATÓRIO
+# Nome do cliente	OBRIGATÓRIO
+# Notas
+# Número do Telefone - 9 dígitos
+# Prefixo, apenas números - 3 dígitos (obrigatório caso preencha "phone")
+# CPF ou CNPJ do cliente. Obrigatório para emissão de boletos registrados.
+# Endereços de E-mail para cópia separados por vírgula
+# CEP. Obrigatório para emissão de boletos registrados
+# Número do endereço (obrigatório caso "zip_code" seja enviado).
+# Rua. Obrigatório caso CEP seja incompleto.
+# Cidade
+# Estado
+# Bairro. Obrigatório caso CEP seja incompleto.
+# Complemento de endereço. Ponto de referência.
+# Variáveis Personalizadas {name:**;value:**}
 
 Sells = db.define_table('sells',
                         Field('product', 'reference loja_products', label='Product'),
-                        Field('client', 'reference plugin_iugu_clients'),
+                        Field('client', 'reference clients'),
                         Field('forma_de_pagamento')
                         )
 

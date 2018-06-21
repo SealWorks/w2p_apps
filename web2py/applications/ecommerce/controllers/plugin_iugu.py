@@ -3,13 +3,6 @@ def get_users():
 
 
 def gerar_fatura():
-    # session.intems_list = session.intems_list or []
-    #
-    # intems_form = SQLFORM(db.bill_items)
-    # if intems_form.process().accepted:
-    #     session.intems_list.append(dict(intems_form.vars))
-    # elif intems_form.process().errors:
-    #     response.flash("Erro no intems")
 
     bill_form = SQLFORM(db.plugin_iugu_bills)
     #TODO optional fields

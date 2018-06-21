@@ -26,7 +26,7 @@ Bills = db.define_table('plugin_iugu_bills',
                         Field('due_date', 'date', label=T("Due Date")),
                         Field('email', label=T("E-mail")),
                         Field('items_list', 'list:integer', label=T("Items")),
-                        Field('client', 'reference plugin_iugu_clients', label=T("Client")),
+                        Field('client', 'reference clients', label=T("Client")),
                         Field('id_iugu', readble=False, writable=False)
                         )
 
