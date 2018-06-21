@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<center style="background-color: #333; color:white; padding:30px">
+    <h1>{{=request.application}}/{{request.function}}</h1>
+</center>
+{{end}}
+
+        <!--Meu codigo a partir daqui-->
+<div class="container">
+    <div class="row">
+        <div class="col m6 s12">
+            {{=form}}
+        </div>
+    </div>
+</div>
