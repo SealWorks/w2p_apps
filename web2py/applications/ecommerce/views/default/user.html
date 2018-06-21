@@ -1,12 +1,21 @@
+{{
+response.page.breadcumbs = [('Home', URL('default', 'index'))]
+if request.args(0) == 'register':
+    response.page.breadcumbs.append(T('Sing Up'))
+elif request.args(0) == 'login':
+    response.page.breadcumbs.append(T('Log In'))
+else:
+    response.page.breadcumbs.append(T(request.args(0).replace('_',' ').title()))
+pass
+}}
+
 
 {{extend 'layout.html'}}
 
 <div class="container">
     <div class="row">
-        <div class="col s12">
-          <h2>{{=T('Sign Up') if request.args(0) == 'register' else T('Log In') if request.args(0) == 'login' else T(request.args(0).replace('_',' ').title())}}</h2>
-        </div>
-        <div id="web2py_user_form" class="col m6 offset-m3">
+        <div id="web2py_user_form" class="col m6">
+        <br>
         {{
         if request.args(0)=='login':
             if not 'register' in auth.settings.actions_disabled:

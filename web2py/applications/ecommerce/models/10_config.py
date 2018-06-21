@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from gluon.contrib.appconfig import AppConfig
+from gluon.storage import Storage
 from gluon.tools import Auth
 
 if request.global_settings.web2py_version < "2.15.5":
@@ -61,10 +62,7 @@ auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
 
 # -------------------------------------------------------------------------
-# Load Plugins
+# response page configuration and default data
 # -------------------------------------------------------------------------
-
-from plugin_materialize import *
-response.formstyle = formstyle_materialize
-auth.settings.formstyle = formstyle_materialize
-
+response.page = Storage()
+response.page.title = appconfig.get('app.name')

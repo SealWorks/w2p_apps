@@ -53,15 +53,12 @@
         <div class="nav-wrapper">
           <div class="row">
             <div class="col s12">
-              <span class="breadcrumb">
-                <span class="hide-on-small-and-down"> {{=appconfig.get('app.name')}}</span>
-                <span class="hide-on-med-and-up"> {{=appconfig.get('app.name')}} long long long text</span>
-              </span>
-              <span class="breadcrumb hide-on-med-and-down">pagina de login </span>
-              <span class="breadcrumb hide-on-small-and-down">pagina de registro</span>
-              <ul class="left">
-                <li><a href="#" data-target="main-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a></li>
-              </ul>
+              {{if response.page.breadcumbs:}}
+                {{BREADCUMBS(response.page.breadcumbs)}}
+              {{else:}}
+                {{=SPAN(appconfig.get('app.name'), _class="breadcrumb brand-logo")}}
+              {{pass}}
+              <ul class="left"><li><a href="#" data-target="main-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a></li></ul>
               <ul class="right">
                 <li>
                   <a href="#" data-target="user-nav" class="sidenav-trigger show-on-medium-and-up">
@@ -103,8 +100,8 @@
     </div>
     <div class="footer-copyright">
       <div class="container white-text">
-      © 2017 - <script>document.write(new Date().getFullYear());</script> {{=T('Copyright')}}
-      <a class="white-text right" href="http://fikdik.com.br" target="_blank">FIKDIK</a>
+      © 2014 - <script>document.write(new Date().getFullYear());</script> {{=T('Copyright')}}
+      <a class="white-text right" href="http://fikdik.com.br" target="_blank">#FIKDIK</a>
       </div>
     </div>
   </footer>
