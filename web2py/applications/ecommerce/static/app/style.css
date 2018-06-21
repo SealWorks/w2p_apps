@@ -24,6 +24,13 @@
     background: none;
 }
 
+.breadcrumb > .hide-on-med-and-up {
+    display: inline-block;
+    overflow: hidden;
+    word-wrap: break-word;
+    width: calc(100% - 196px);
+}
+
 @media only screen and (min-width: 993px) {
     header, main, footer {
         padding-left: 300px;
@@ -43,11 +50,4 @@
         padding: 0;
         width: 100% !important;
     }
-}
-
-.breadcrumb > .hide-on-med-and-up {
-    display: inline-block;
-    overflow: hidden;
-    word-wrap: break-word;
-    width: calc(100% - 196px);
 }

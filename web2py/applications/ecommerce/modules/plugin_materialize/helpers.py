@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from gluon import DIV, UL, LI, A
+from gluon import DIV, UL, LI, A, SPAN, current
 
 class MENU(DIV):
     tag = 'ul'
@@ -26,7 +26,7 @@ class MENU(DIV):
         elif level == 1 and menu_name :
             ul = UL(_class=self['ul_class'], _id=menu_name)
         else:
-            return '' # Navbar works only for 1 level
+            return '' # Navbar 1 level only
         for n, item in enumerate(data):
             if isinstance(item, LI):
                 ul.append(item)
@@ -63,3 +63,39 @@ class MENU(DIV):
 
     def xml(self):
         return self.serialize(self.data, 0).xml()
+
+
+def BREADCUMBS(*args):
+    """
+    Args:
+        *args:
+
+    Returns:
+        <span class="breadcrumb">
+            <span class="hide-on-small-and-down"> Fisrt</span>
+            <span class="hide-on-med-and-up"> Last </span>
+        </span>
+        <span class="breadcrumb hide-on-med-and-down"> Mid 1</span>
+        <span class="breadcrumb hide-on-med-and-down"> Mid 2</span>
+        <span class="breadcrumb hide-on-med-and-down"> Mid ...</span>
+        <span class="breadcrumb hide-on-small-and-down"> Last</span>
+
+    """
+    l = list(*args)
+    last = l.pop()
+    first = l and l.pop(0) or None
+    if first:
+        current.response.write(SPAN(
+            SPAN(A(first[0], _href=first[1]), _class="hide-on-small-and-down"),
+            SPAN(last, _class="hide-on-med-and-up"),
+            _class="breadcrumb"))
+        for i in l:
+            name, link = i
+            current.response.write(SPAN(A(first[0], _href=first[1]), _class="breadcrumb hide-on-med-and-down"))
+        current.response.write(SPAN(last, _class="breadcrumb hide-on-small-and-down"))
+    else:
+        current.response.write(SPAN(last,_class="breadcrumb"))
+
+
+
+
