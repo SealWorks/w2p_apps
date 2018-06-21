@@ -8,6 +8,8 @@ def formstyle_materialize(form, fields, *args, **kwargs):
     form['_class'] = ' '.join(set(['col', 's12'] + form['_class'].split(' ')))
     table = DIV(_class="row")
     for id, label, controls, help in fields:
+        print(id, label, controls, help)
+
         _input_field = DIV(_class="input-field col s12")
         if help:
             _input_field.add_class('tooltipped')

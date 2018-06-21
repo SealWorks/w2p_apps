@@ -23,4 +23,12 @@ def user():
     to decorate functions that need access control
     also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
     """
+    if request.args[0] == 'profile': redirect(URL('default', 'index'))
     return dict(form=auth())
+
+@auth.requires(lambda: auth.has_membership('app_admin'))
+def _ah():
+    tablename = request.args(0)
+    if tablename: grid = SQLFORM.smartgrid(db[tablename])
+    else: grid = UL(*[LI(A(t, _href=URL(args=t))) for t in db.tables])
+    return dict(grid=grid)
