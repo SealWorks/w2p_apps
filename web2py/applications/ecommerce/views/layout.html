@@ -13,7 +13,6 @@
     {{include 'web2py_ajax.html'}}
 </head>
 <body>
-
   <ul id="main-nav" class="sidenav sidenav-fixed">
     <li><a class="brand-logo" href="{{=URL('default', 'index')}}"><img class="responsive-img" src="{{=STATIC("tmp/logo.png")}}"></a></li>
     <li><br></li>
@@ -28,7 +27,7 @@
       <li>
         <div class="user-view">
           <div class="background"><img src="{{=STATIC('tmp/bg.png')}}"></div>
-          <a href="#user"><img class="circle" src="{{=STATIC('tmp/user.jpg')}}"></a>
+          <a href="{{=URL('default', 'user', args=('profile'))}}"><img class="circle" src="{{=STATIC('tmp/user.jpg')}}"></a>
           <a href="#name"><span class="white-text name">Jaiminho</span></a>
           <a href="#email"><span class="white-text email">jaiminho@gmail.com</span></a>
         </div>
@@ -64,7 +63,7 @@
                   <a href="#" data-target="user-nav" class="sidenav-trigger show-on-medium-and-up">
                     {{if auth.user_id:}}
                       <i class="material-icons left">shopping_cart</i>
-                      <span class="new badge blue hide-on-small-and-down" data-badge-caption="itens">1</span>
+                      <span class="new badge blue hide-on-small-and-down" data-badge-caption="items">1</span>
                     {{else:}}
                       <i class="material-icons">account_box</i>
                     {{pass}}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from gluon import DIV, SPAN, INPUT, I
+from gluon import DIV, SPAN, INPUT, I, LABEL
 
 def formstyle_materialize(form, fields, *args, **kwargs):
     """ divs only """
@@ -8,7 +8,6 @@ def formstyle_materialize(form, fields, *args, **kwargs):
     form['_class'] = ' '.join(set(['col', 's12'] + form['_class'].split(' ')))
     table = DIV(_class="row")
     for id, label, controls, help in fields:
-        print(id, label, controls, help)
 
         _input_field = DIV(_class="input-field col s12")
         if help:
@@ -16,7 +15,22 @@ def formstyle_materialize(form, fields, *args, **kwargs):
             _input_field['_data-tooltip'] = help
         if getattr(controls, 'tag', None) == 'textarea':
             controls['_class'] += ' materialize-textarea'
-        if controls['_type'] == 'file':
+        if controls['_type'] == 'checkbox':
+            print(controls)
+            controls['_checked'] = controls['_value'] == 'on' and "checked" or ""
+            controls['_value'] = ""
+            _input_field.append(
+                DIV(
+                    LABEL(
+                        controls,
+                        SPAN(label.components[0]),
+                        _for=controls['_id']
+                    )
+                )
+            )
+            table.append(_input_field)
+            continue
+        elif controls['_type'] == 'file':
             _input_field['_class'] = 'file-field col s12 input-field'
             _input_field.append(
                     DIV(
@@ -31,7 +45,7 @@ def formstyle_materialize(form, fields, *args, **kwargs):
                     _class='file-path-wrapper'))
             table.append(_input_field)
             continue
-        if controls['_type'] == 'submit':
+        elif controls['_type'] == 'submit':
             controls.tag = 'button'
             controls.components.append(I('send', _class=('material-icons right')))
             controls.components.append(controls['_value'])
