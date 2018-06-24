@@ -1,0 +1,44 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<div style="background-color: #333; color:white; padding:30px">
+    <h1>{{=request.application}}/{{request.function}}</h1>
+</div>
+{{end}}
+
+        <!--Meu codigo a partir daqui-->
+<div class="container">
+    <div class="row">
+        <div class="col m6 s12">
+            <table>
+                <tr>
+                    {{for key, value in bills[0].items():}}
+                    <th>{{=key}}</th>
+                    {{pass}}
+                </tr>
+                {{for bill in bills:}}
+                <tr>
+                    {{for key, value in bill.items():}}
+                    <td>{{=value}}</td>
+                    {{pass}}
+                </tr>
+                {{pass}}
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--
+            id due_date currency discount_cents email notification_url return_url status tax_cents updated_at
+            total_cents total_paid_cents paid_at taxes_paid_cents paid_cents cc_emails payable_with overpaid_cents
+            ignore_due_email ignore_canceled_email advance_fee_cents commission_cents early_payment_discount order_id
+            secure_id secure_url customer_id customer_ref customer_name user_id
+            total taxes_paid total_paid total_overpaid commission
+            fines_on_occurrence_day total_on_occurrence_day fines_on_occurrence_day_cents total_on_occurrence_day_cents
+            financial_return_date advance_fee paid original_payment_id double_payment_id interest
+            discount created_at refundable installments transaction_number payment_method created_at_iso updated_at_iso
+            occurrence_date financial_return_dates bank_slip items early_payment_discounts variables custom_variables
+            logs
+            -->
+        <!--
+        -->
