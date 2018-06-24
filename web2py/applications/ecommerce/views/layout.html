@@ -14,8 +14,7 @@
 </head>
 <body>
   <ul id="main-nav" class="sidenav sidenav-fixed">
-    <li><a class="brand-logo" href="{{=URL('default', 'index')}}"><img class="responsive-img" src="{{=STATIC("tmp/logo.png")}}"></a></li>
-    <li><br></li>
+    <li class="inline-block"><a class="brand-logo" href="{{=URL('default', 'index')}}"><img class="responsive-img" src="{{=STATIC("tmp/logo.png")}}"></a></li>
     <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
     <li><a href="#!">Second Link</a></li>
     <li><div class="divider"></div></li>
@@ -26,8 +25,8 @@
     {{if auth.user_id:}}
       <li>
         <div class="user-view">
-          <div class="background"><img src="{{=STATIC('tmp/bg.png')}}"></div>
-          <a href="{{=URL('default', 'user', args=('profile'))}}"><img class="circle" src="{{=STATIC('tmp/user.jpg')}}"></a>
+          <div class="background"><img src="{{=STATIC('tmp/bg.jpeg')}}"></div>
+          <a href="{{=URL('default', 'user', args=('profile'))}}"><img class="circle" src="{{=STATIC('tmp/user.jpeg')}}"></a>
           <a href="#name"><span class="white-text name">Jaiminho</span></a>
           <a href="#email"><span class="white-text email">jaiminho@gmail.com</span></a>
         </div>

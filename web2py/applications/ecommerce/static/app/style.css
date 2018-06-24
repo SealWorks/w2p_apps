@@ -23,6 +23,14 @@
 .sidenav .brand-logo:hover{
     background: none;
 }
+.sidenav li > a.brand-logo{
+    height: inherit;
+}
+
+
+.inline-block {
+    display: inline-block;
+}
 
 .breadcrumb > .hide-on-med-and-up {
     display: inline-block;
