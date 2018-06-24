@@ -1,59 +1,21 @@
 # -*- coding: utf-8 -*-
-from gluon import DIV, SPAN, INPUT, I, LABEL
+from gluon import CAT, DIV, SPAN, INPUT, I, LABEL, P
 
 def formstyle_materialize(form, fields, *args, **kwargs):
-    """ divs only """
-    if not getattr(form, 'tag', None) == 'form': return DIV(form, fields, *args, **kwargs)
-    form['_class'] = form['_class'] or 'col'
-    form['_class'] = ' '.join(set(['col', 's12'] + form['_class'].split(' ')))
-    table = DIV(_class="row")
+    form.add_class('row')
+    parent = CAT(_class='col s12')
     for id, label, controls, help in fields:
-
-        _input_field = DIV(_class="input-field col s12")
-        if help:
-            _input_field.add_class('tooltipped')
-            _input_field['_data-tooltip'] = help
-        if getattr(controls, 'tag', None) == 'textarea':
-            controls['_class'] += ' materialize-textarea'
-        if controls['_type'] == 'checkbox':
-            print(controls)
-            controls['_checked'] = controls['_value'] == 'on' and "checked" or ""
-            controls['_value'] = ""
-            _input_field.append(
-                DIV(
-                    LABEL(
-                        controls,
-                        SPAN(label.components[0]),
-                        _for=controls['_id']
-                    )
-                )
-            )
-            table.append(_input_field)
-            continue
-        elif controls['_type'] == 'file':
-            _input_field['_class'] = 'file-field col s12 input-field'
-            _input_field.append(
-                    DIV(
-                        SPAN(label[0]),
-                        controls,
-                        _class='btn'))
-            _input_field.append( DIV(
-                    INPUT(
-                        _class='file-path  validate',
-                        _readonly = '',
-                        _type='text'),
-                    _class='file-path-wrapper'))
-            table.append(_input_field)
-            continue
-        elif controls['_type'] == 'submit':
-            controls.tag = 'button'
-            controls.components.append(I('send', _class=('material-icons right')))
-            controls.components.append(controls['_value'])
-            del controls['_value']
-            controls['_name'] = 'action'
-            controls.add_class('btn right')
-        _input_field.append(controls)
-        _input_field.append(label)
-        table.append(_input_field)
-    return table
+        type = controls['_type']
+        _input_field = type == 'checkbox' and P(_class="col s12") or DIV(_class='input-field col s12')
+        if type == 'checkbox':
+            if controls['_value'] == 'on': controls['_checked'] = "checked"
+            _input_field.append(LABEL(
+                controls,
+                SPAN(label.components[0])
+            ))
+        else: #todo: textarea field
+            _input_field.append(controls)
+            _input_field.append(label)
+        parent.append(_input_field)
+    return parent
 
