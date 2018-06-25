@@ -1,10 +1,10 @@
-Products = db.define_table('loja_products',
+db.define_table('loja_products',
                            Field('product', 'string', label='Product'),
                            Field('description', 'text', label='Description'),
                            Field('codes', 'json', label='Codes')
                            )
 
-Suppliers = db.define_table('loja_suppliers',
+db.define_table('loja_suppliers',
                             Field('name', 'string', label='Name'),
                             Field('cnpj', 'integer', label='CNPJ'),  # TODO add validador
                             # contato
@@ -14,7 +14,7 @@ Suppliers = db.define_table('loja_suppliers',
                             Field('email', 'string', label='E-mail', requires=IS_EMAIL(error_message='invalid email!'))
                             )
 
-Clients = db.define_table('clients',
+db.define_table('clients',
                           Field('user_id','reference auth_user'),
                           Field('cpf_cnpj', label='CPF/CNPJ'),
                           Field('iss', 'integer', label='ISS'),
@@ -22,7 +22,7 @@ Clients = db.define_table('clients',
                           Field('phone', 'string', label=T('Telephone'))
                           )
 
-Address = db.define_table('client_address',
+db.define_table('client_address',
                           Field('client','reference clients'),
                           Field('type_add','list:string'),
                           #---dados do enderesso
@@ -52,13 +52,13 @@ Address = db.define_table('client_address',
 # Complemento de endereço. Ponto de referência.
 # Variáveis Personalizadas {name:**;value:**}
 
-Sells = db.define_table('sells',
+db.define_table('sells',
                         Field('product', 'reference loja_products', label='Product'),
                         Field('client', 'reference clients'),
                         Field('forma_de_pagamento')
                         )
 
-Buys = db.define_table('buys',
+db.define_table('buys',
                        Field('product', 'reference loja_products', label='Product'),
                        Field('suppliers', 'reference loja_suppliers'),
                        Field('forma_de_pagamento')
