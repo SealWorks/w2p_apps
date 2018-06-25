@@ -42,6 +42,10 @@
     margin-left: 10px;
 }
 
+.error_wrapper{
+    color: #B71C1C;
+}
+
 
 @media only screen and (min-width: 993px) {
     header, main, footer {

@@ -15,11 +15,15 @@
 <body>
   <ul id="main-nav" class="sidenav sidenav-fixed">
     <li class="inline-block"><a class="brand-logo" href="{{=URL('default', 'index')}}"><img class="responsive-img" src="{{=STATIC("tmp/logo.png")}}"></a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    <li class="search hide"> <!-- todo: css for in menu search -->
+        <div class="search-wrapper">
+            <input id="search" placeholder="Search"><i class="material-icons">search</i>
+            <div class="search-results"></div>
+        </div>
+    </li>
+    <li>
+        {{=response.menu}}
+    </li>
   </ul>
   <ul id="user-nav" class="sidenav" data-edge="right">
     {{if auth.user_id:}}
