@@ -28,9 +28,31 @@ def user():
 @auth.requires_login()
 def profile():
     #auth.user é o objeto que contem os dados do usuário logado guardados na tabela auth_user
-    form = SQLFORM(db.clients, db.auth_user)
-    return dict(form = form)
 
+    #form = SQLFORM(db.clients,record=auth.user.id)
+    client = db.clients(db.clients.user_id == auth.user.id)
+    form = SQLFORM(db.clients,record=client,showid=False)
+    form.vars.user_id = auth.user.id
+
+    if form.process(keepvalues=True).accepted:
+
+        response.flash = 'Thanks for filling the form'
+
+    return dict(form=form)
+    #return dict(form_client = form1, form_user =form2)
+
+@auth.requires_login()
+def add_address():
+    address = db.address(db.address.user_id==auth.user.id)
+    form = SQLFORM(db.address,record=address,showid=False)
+    form.vars.user_id = auth.user.id
+    form.vars.type_add = 'Cobrança'
+    if form.process().accepted:
+        response.flash = 'Thanks for filling the form'
+    else:
+        response.flash = "Error"
+
+    return dict(form=form, user=address)
 
 @auth.requires(lambda: auth.has_membership('app_admin'))
 def _ah():

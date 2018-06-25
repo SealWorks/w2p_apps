@@ -22,9 +22,10 @@ db.define_table('clients',
                           Field('phone', 'string', label=T('Telephone'))
                           )
 
-db.define_table('client_address',
-                          Field('client','reference clients'),
-                          Field('type_add','list:string'),
+db.define_table('address',
+                          Field('user_id','reference auth_user'),
+                          Field('type_add','list:string'),#,requires=IS_IN_SET(['Cobrança','Entrega'])),
+                          Field('name'),
                           #---dados do enderesso
                           Field('zip', 'string', label=T('ZIP')),
                           Field('street', 'string', label=T('Street')),
