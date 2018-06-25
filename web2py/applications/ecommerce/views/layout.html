@@ -104,10 +104,11 @@
     </div>
   </footer>
   <!--  Scripts-->
-  <script src="{{=STATIC('jquery/jquery-2.1.1.min.js')}}"></script>
   <script src="{{=STATIC('materialize/1.0.0/materialize.min.js')}}"></script>
-  <script src="{{=STATIC('app/web2py.js')}}"></script>
   <script src="{{=STATIC('app/init.js')}}"></script>
+  {{if response.flash:}}
+  <script>M.toast({html: '{{=response.flash}}'})</script>
+  {{pass}}
   {{block page_js}}
   {{end page_js}}
 </body>

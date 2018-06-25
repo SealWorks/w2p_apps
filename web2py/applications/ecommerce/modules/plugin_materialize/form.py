@@ -13,7 +13,9 @@ def formstyle_materialize(form, fields, *args, **kwargs):
                 controls,
                 SPAN(label.components[0])
             ))
-        else: #todo: textarea field
+        elif type == 'submit':
+            controls.add_class('btn')
+        if len(_input_field) < 1:
             _input_field.append(controls)
             _input_field.append(label)
         parent.append(_input_field)
