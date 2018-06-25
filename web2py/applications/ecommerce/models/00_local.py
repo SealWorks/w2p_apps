@@ -31,7 +31,7 @@ import inspect
 #             # then this is a function of the current controller
 #             pass
 
-response.menu = UL(_class='collapsible')
+response.tmpmenu = UL(_class='collapsible')
 controllers = sorted( listdir(apath('ecommerce/controllers/', r=request), '.*\.py$'))
 controllers = [x.replace('\\', '/') for x in controllers]
 for c in controllers:
@@ -44,4 +44,4 @@ for c in controllers:
     for i in sorted(items):
         body.append(LI(A(i, _href=URL(_c, i))))
     li.append(DIV( body, _class='collapsible-body'))
-    response.menu.append(li)
+    response.tmpmenu.append(li)
