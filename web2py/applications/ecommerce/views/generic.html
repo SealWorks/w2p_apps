@@ -1,3 +1,7 @@
+{{
+response.page.breadcumbs = [' '.join(x.capitalize() for x in request.function.split('_'))]
+}}
+
 {{extend 'layout.html'}}
 {{"""
 
@@ -5,7 +9,6 @@ You should not modify this file.
 It is used as default when a view is not provided for your controllers
 
 """}}
-<h2>{{=' '.join(x.capitalize() for x in request.function.split('_'))}}</h2>
 
 <div class="container">
   <div class="row">

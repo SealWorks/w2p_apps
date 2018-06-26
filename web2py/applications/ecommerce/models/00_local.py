@@ -19,6 +19,10 @@ def find_exposed_functions(dt):
     dt = regex_longcomments.sub('', dt)
     return regex_expose.findall(dt)
 
+def beauty_text(t):
+    parts = t.split('_')
+    return ' '.join([x.title() for x in parts])
+
 import inspect
 # when using the same globals() an exception is thrown
 # for k, v in globals().copy().iteritems():
@@ -39,9 +43,9 @@ for c in controllers:
     _c = c[:-3]
     data = safe_read(apath('ecommerce/controllers/%s' % c, r=request))
     items = find_exposed_functions(data)
-    li.append(DIV(_c, _class='collapsible-header'))
+    li.append(DIV(beauty_text(_c), _class='collapsible-header'))
     body = UL()
     for i in sorted(items):
-        body.append(LI(A(i, _href=URL(_c, i))))
+        body.append(LI(A(beauty_text(i), _href=URL(_c, i))))
     li.append(DIV( body, _class='collapsible-body'))
     response.tmpmenu.append(li)
