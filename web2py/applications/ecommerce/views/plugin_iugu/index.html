@@ -1,0 +1,59 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<div style="background-color: #333; color:white; padding:30px">
+    <h1>{{=request.application}}/{{request.function}}</h1>
+</div>
+{{end}}
+
+        <!--Meu codigo a partir daqui-->
+<div class="container">
+    <div class="row">
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','index')}}">{{=T('Ecommerce')}}</a>
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','get_users')}}">{{=T("Get Users")}}</a>
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','new_invoice')}}">{{=T("Gerar Fatura")}}</a>
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','visualizar_faturas')}}">{{=T("Visualizar Faturas")}}</a>
+    </div>
+    <div class="row">
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','new_customers')}}">{{=T("Cadastrar no Iugu")}}</a>
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','update_customer')}}">{{=T("Atualizar Cadastro")}}</a>
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','del_client')}}">{{=T("Sair do Iugu")}}</a>
+            <a class="btn btn-secondary" href="{{=URL('ecommerce','plugin_iugu','list_clients')}}">{{=T("Listar Clientes")}}</a>
+    </div>
+</div>
+
+        <!--
+limit
+int32
+Limita em até 1.000 o número de registros listados. Caso não seja enviado, aplica-se o limite padrão de 100 registros. Também utilizando em paginação.
+
+
+start
+int32
+Quantos registros pular do início da pesquisa.
+
+
+created_at_from
+date
+Registros criados a partir desta data passada no parâmetro. Formato (AAAA-MM-DDThh:mm:ss-03:00)
+
+
+created_at_to
+date
+Registros criados até esta data passada no parâmetro. Formato (AAAA-MM-DDThh:mm:ss-03:00)
+
+
+query
+string
+Neste parâmetro pode ser passado um texto para pesquisa como e-mail, nome, anotações e variáveis customizadas
+
+
+updated_since
+date
+Registros atualizados desde o valor passado no parâmetro. Formato (AAAA-MM-DDThh:mm:ss-03:00)
+
+
+sortBy
+object
+Um hash sendo a chave o nome do campo para ordenação e o valor sendo DESC ou ASC para descendente e ascendente, respectivamente. ex1: sortBy[created_at]=ASC ex2: sortBy[name]=ASC ex3: sortBy[updated_at]=DESC
+        -->

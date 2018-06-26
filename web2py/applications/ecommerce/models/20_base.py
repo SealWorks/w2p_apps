@@ -15,27 +15,30 @@ db.define_table('loja_suppliers',
                             )
 
 db.define_table('clients',
-                          Field('user_id','reference auth_user'),
-                          Field('cpf_cnpj', label='CPF/CNPJ'),
-                          Field('iss', 'integer', label='ISS'),
-                          Field('phone_prefix', 'string', label=T('Phone Prefix')),
-                          Field('phone', 'string', label=T('Telephone'))
-                          )
+                Field('user_id','integer'),#integer para poder ser vazio
+                Field('email'),
+                Field('name'),
+                Field('cpf_cnpj', label='CPF/CNPJ'),
+                Field('iss', 'integer', label='ISS'),
+                Field('phone_prefix', 'string', label=T('Phone Prefix')),
+                Field('phone', 'string', label=T('Telephone')),
+                Field('user_refs','json')
+                )
 
 db.define_table('address',
-                          Field('user_id','reference auth_user'),
-                          Field('type_add','list:string'),#,requires=IS_IN_SET(['Cobrança','Entrega'])),
-                          Field('name'),
-                          #---dados do enderesso
-                          Field('zip', 'string', label=T('ZIP')),
-                          Field('street', 'string', label=T('Street')),
-                          Field('home_number', 'string', label=T('Number')),
-                          Field('district', 'string', label=T('District')),
-                          Field('city', 'string', label=T('City')),
-                          Field('country_state', 'string', label=T('State')),
-                          Field('country', 'string', label=T('Country')),
-                          Field('complement', 'string', label=T('Comnplement'))
-                          )
+                Field('client_id','reference clients'),
+                Field('name'),
+                Field('is_main','boolean'),#,requires=IS_IN_SET(['Cobrança','Entrega'])),
+            #---dados do enderesso
+                Field('zip', 'string', label=T('ZIP')),
+                Field('street', 'string', label=T('Street')),
+                Field('home_number', 'string', label=T('Number')),
+                Field('district', 'string', label=T('District')),
+                Field('city', 'string', label=T('City')),
+                Field('country_state', 'string', label=T('State')),
+                Field('country', 'string', label=T('Country')),
+                Field('complement', 'string', label=T('Comnplement'))
+                )
 # BODY PARAMS
 # Email do cliente	OBRIGATÓRIO
 # Nome do cliente	OBRIGATÓRIO
