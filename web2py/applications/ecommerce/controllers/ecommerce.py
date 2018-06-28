@@ -25,13 +25,6 @@ def profile():
             iugu.new_cliente(form.vars)
     return dict(form=form,table = client_address)
 
-@auth.requires_login()
-def list_clients():
-    list =[]
-    if iugu:
-        list = iugu.list_customers()
-    return dict(clients = list)
-
 
 @auth.requires_login()
 def add_address():

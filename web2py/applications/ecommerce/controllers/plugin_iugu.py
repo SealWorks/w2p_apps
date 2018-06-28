@@ -41,12 +41,12 @@ def segunda_via():
     return dict(bill = bill)
 
 
-def new_client():
+def new_customer():
 
     return dict()
 
 
 #@auth.requires_login()
-def list_clients():
+def list_custumers():
     list = iugu.list_customers()
     return dict(clients=list)
