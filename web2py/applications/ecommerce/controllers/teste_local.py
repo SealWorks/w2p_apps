@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from gluon.contrib.populate import populate
 
 def index():
     user = auth.user
@@ -16,6 +15,7 @@ def setup():
 
 @auth.requires_membership('app_admin')
 def populate_me():
+    from gluon.contrib.populate import populate
     if request.args(0):
         form = SQLFORM.factory(Field('quantity', 'integer'))
         if form.process().accepted:
@@ -29,3 +29,14 @@ def populate_me():
     else:
         grid = UL(*[LI(A(t, _href=URL(args=t))) for t in db.tables])
     return locals()
+
+
+
+def iugu_teste_py2():
+    from gluon.tools import fetch
+    import urllib2, base64
+    url = "https://api.iugu.com/v1/invoices/"
+    token = appconfig.get("iugu.token")
+    base64string = base64.encodestring('%s:%s' % (token, "")).replace('\n', '')
+    r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
+    return r
