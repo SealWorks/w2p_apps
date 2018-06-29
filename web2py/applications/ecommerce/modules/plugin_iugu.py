@@ -35,10 +35,19 @@ class Iugu:
     def get_invoices(self, page=0, filters=dict()):
         status = {'pending', 'paid', 'canceled', 'partially_paid', 'refund', 'expired', 'authorized'}
         url = self.url + 'invoices'
-        data={'limit':10}
-        url += '?'+urllib.urlencode(data)
-        print(url)
-        r = fetch(url, headers=self.headers)
+        filters['limit'] = (page + 1) * 1000
+        filters['start'] = page * 1000
+
+        # 'due_date': '',
+        # 'paid_at_from': '',
+        # 'paid_at_to': '',
+        # 'filtros': [],
+        # 'created_at_from': '2018-01-01',
+        # 'created_at_to': ''
+        # 'updated_since': ''
+
+        url += '?' + urllib.urlencode(filters)
+        r = current.cache.ram('teste', lambda: json.loads(fetch(url, headers=self.headers)), 144000)  # 4h = 144000seg
         return r
 
 
