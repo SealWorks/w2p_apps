@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 db.define_table('loja_products',
                            Field('product', 'string', label='Product'),
                            Field('description', 'text', label='Description'),
@@ -15,14 +18,14 @@ db.define_table('loja_suppliers',
                             )
 
 db.define_table('clients',
-                Field('user_id','integer'),#integer para poder ser vazio
-                Field('email'),
-                Field('name'),
-                Field('cpf_cnpj', label='CPF/CNPJ'),
+                Field('user_ida', 'integer'),#integer para poder ser vazio
+                Field('email', 'string'),
+                Field('name', 'string'),
+                Field('cpf_cnpj', 'string', label='CPF/CNPJ'),
                 Field('iss', 'integer', label='ISS'),
                 Field('phone_prefix', 'string', label=T('Phone Prefix')),
                 Field('phone', 'string', label=T('Telephone')),
-                Field('user_refs','json')
+                Field('user_refs', 'json')
                 )
 
 db.define_table('address',

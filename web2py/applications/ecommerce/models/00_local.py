@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from gluon.admin import apath
 from gluon.custom_import import track_changes
-from gluon.fileutils import listdir
-from gluon.myregex import regex_longcomments, regex_expose
-
 track_changes(True)
 
 
+from gluon.admin import apath
+from gluon.fileutils import listdir
+from gluon.myregex import regex_longcomments, regex_expose
+
+
 def safe_read(a, b='r'):
-    safe_file = open(a, b, encoding="utf8")
+    try:
+        safe_file = open(a, b, encoding="utf8")
+    except TypeError:
+        safe_file = open(a, b)
     try:
         return safe_file.read()
     finally:
@@ -23,17 +27,6 @@ def beauty_text(t):
     parts = t.split('_')
     return ' '.join([x.title() for x in parts])
 
-import inspect
-# when using the same globals() an exception is thrown
-# for k, v in globals().copy().iteritems():
-#     print(k, v)
-#     if inspect.isfunction(v):
-#         argspec = inspect.getargspec(v)
-#
-#         # anything else to check?
-#         if len(argspec.args) == 0 and argspec.varargs is None and argspec.keywords is None:
-#             # then this is a function of the current controller
-#             pass
 
 response.tmpmenu = UL(_class='collapsible')
 controllers = sorted( listdir(apath('ecommerce/controllers/', r=request), '.*\.py$'))

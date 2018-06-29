@@ -22,7 +22,6 @@ def populate_me():
             qtd = abs(int(form.vars.quantity or 1))
             populate(db[request.args(0)], qtd)
             response.flash = 'Populated with ' + str(qtd) + ' data!'
-
         elif form.errors:
             response.flash = 'oh nooos'
         rows = db(db[request.args(0)]).select()
@@ -31,12 +30,28 @@ def populate_me():
     return locals()
 
 
-
 def iugu_teste_py2():
     from gluon.tools import fetch
-    import urllib2, base64
+    import base64
     url = "https://api.iugu.com/v1/invoices/"
     token = appconfig.get("iugu.token")
     base64string = base64.encodestring('%s:%s' % (token, "")).replace('\n', '')
     r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
     return r
+
+
+def form_pra_que_te_quero():
+    db.define_table('esclerose',
+                    Field('stinguinha', 'string'),
+                    Field('textinho', 'text'),
+                    Field('booleaninho', 'boolean'),
+                    Field('interina', 'integer'),
+                    Field('dobradinha', 'double'),
+                    Field('bicentenarinha', 'decimal(2,4)'),
+                    Field('datinha', 'date'),
+                    Field('tempinho', 'time'),
+                    Field('segredinho', 'password'),
+                    Field('tipinho'),
+                    )
+    form = SQLFORM(db.esclerose)
+    return dict(form=form)
