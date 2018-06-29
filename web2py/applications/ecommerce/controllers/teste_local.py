@@ -31,7 +31,6 @@ def populate_me():
     return locals()
 
 
-
 def iugu_teste_py2():
     # from gluon.tools import fetch
     # import urllib, base64
@@ -46,3 +45,20 @@ def iugu_teste_py2():
     import mymodule
     l = mymodule.year_month_iterator(from_date='2017-12-01',to_date='2018-01-01')
     return locals()
+
+
+def form_pra_que_te_quero():
+    db.define_table('esclerose',
+                    Field('stinguinha', 'string'),
+                    Field('textinho', 'text'),
+                    Field('booleaninho', 'boolean'),
+                    Field('interina', 'integer'),
+                    Field('dobradinha', 'double'),
+                    Field('bicentenarinha', 'decimal(2,4)'),
+                    Field('datinha', 'date'),
+                    Field('tempinho', 'time'),
+                    Field('segredinho', 'password'),
+                    Field('tipinho'),
+                    )
+    form = SQLFORM(db.esclerose)
+    return dict(form=form)

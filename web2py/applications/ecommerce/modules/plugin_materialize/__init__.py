@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-__all__ = ['BREADCUMBS','MENU', 'CheckWidget', 'SwitchWidget', 'formstyle_materialize']
+__all__ = ['BREADCUMBS', 'MENU', 'CheckWidget', 'SwitchWidget', 'formstyle_materialize']
 
 
 from plugin_materialize.form import formstyle_materialize
