@@ -10,25 +10,30 @@
 <div class="container">
     <div class="row">
         <div class="col m6 s12">
-            <table>
-                <tr>
-                    {{for key, value in bills[0].items():}}
-                    <th>{{=key}}</th>
-                    {{pass}}
-                </tr>
-                {{for bill in bills:}}
-                <tr>
-                    {{for key, value in bill.items():}}
-                    <td>{{=value}}</td>
-                    {{pass}}
-                </tr>
-                {{pass}}
-            </table>
+            {{=form}}
+            {{=bills}}
         </div>
     </div>
 </div>
 
 <!--
+
+<table>
+                <tr>
+                    {{#for key, value in bills[0].items():}}
+                    <th>{{#=key}}</th>
+                    {{#pass}}
+                </tr>
+                {{#for bill in bills:}}
+                <tr>
+                    {{#for key, value in bill.items():}}
+                    <td>{{#=value}}</td>
+                    {{#pass}}
+                </tr>
+                {{#pass}}
+            </table>
+
+
             id due_date currency discount_cents email notification_url return_url status tax_cents updated_at
             total_cents total_paid_cents paid_at taxes_paid_cents paid_cents cc_emails payable_with overpaid_cents
             ignore_due_email ignore_canceled_email advance_fee_cents commission_cents early_payment_discount order_id

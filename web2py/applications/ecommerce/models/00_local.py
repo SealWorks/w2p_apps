@@ -9,7 +9,7 @@ track_changes(True)
 
 
 def safe_read(a, b='r'):
-    safe_file = open(a, b, encoding="utf8")
+    safe_file = open(a, b)
     try:
         return safe_file.read()
     finally:
