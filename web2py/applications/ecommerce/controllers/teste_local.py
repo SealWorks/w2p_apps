@@ -41,7 +41,6 @@ def iugu_teste_py2():
     # url += urllib.urlencode(data)
     # r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
     # return r
-
     import mymodule
     l = mymodule.year_month_iterator(from_date='2017-12-01',to_date='2018-01-01')
     return locals()
