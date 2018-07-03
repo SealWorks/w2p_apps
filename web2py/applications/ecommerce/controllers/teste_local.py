@@ -22,6 +22,7 @@ def populate_me():
             qtd = abs(int(form.vars.quantity or 1))
             populate(db[request.args(0)], qtd)
             response.flash = 'Populated with ' + str(qtd) + ' data!'
+
         elif form.errors:
             response.flash = 'oh nooos'
         rows = db(db[request.args(0)]).select()
@@ -31,13 +32,18 @@ def populate_me():
 
 
 def iugu_teste_py2():
-    from gluon.tools import fetch
-    import base64
-    url = "https://api.iugu.com/v1/invoices/"
-    token = appconfig.get("iugu.token")
-    base64string = base64.encodestring('%s:%s' % (token, "")).replace('\n', '')
-    r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
-    return r
+    # from gluon.tools import fetch
+    # import urllib, base64
+    # url = "https://api.iugu.com/v1/invoices?"
+    # token = appconfig.get("iugu.token")
+    # base64string = base64.encodestring('%s:%s' % (token, "")).replace('\n', '')
+    # data = dict(limit=10)
+    # url += urllib.urlencode(data)
+    # r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
+    # return r
+    import mymodule
+    l = mymodule.year_month_iterator(from_date='2017-12-01',to_date='2018-01-01')
+    return locals()
 
 
 def form_pra_que_te_quero():
