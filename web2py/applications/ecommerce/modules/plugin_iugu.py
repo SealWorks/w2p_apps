@@ -3,10 +3,12 @@ from gluon.tools import fetch
 import json, base64, urllib
 from datetime import datetime
 from gluon import current
-
+import mymodule
 
 class Iugu:
     url = "https://api.iugu.com/v1/"
+    invoice_status = {'pending', 'paid', 'canceled', 'partially_paid', 'refund', 'expired', 'authorized'}
+    date_format = "%Y-%m-%d"
 
     def __init__(self, token):
         self.token = token
@@ -33,23 +35,15 @@ class Iugu:
         return requests.request("POST", url, json=payload, auth=self.auth)
 
     def get_invoices(self, page=0, filters=dict()):
-        status = {'pending', 'paid', 'canceled', 'partially_paid', 'refund', 'expired', 'authorized'}
-        url = self.url + 'invoices'
         filters['limit'] = (page + 1) * 1000
-        filters['start'] = page * 1000
-
-        # 'due_date': '',
-        # 'paid_at_from': '',
-        # 'paid_at_to': '',
-        # 'filtros': [],
-        # 'created_at_from': '2018-01-01',
-        # 'created_at_to': ''
-        # 'updated_since': ''
-
-        url += '?' + urllib.urlencode(filters)
-        r = current.cache.ram('teste', lambda: json.loads(fetch(url, headers=self.headers)), 144000)  # 4h = 144000seg
+        if page:
+            filters['start'] = page * 1000
+        if 'created_at_from' in filters:
+            x = mymodule.year_month_list(from_date=filters['created_at_from'])
+        print(filters)
+        url = self.url + 'invoices?' + urllib.urlencode(filters)
+        r = current.cache.ram('teste', lambda: json.loads(fetch(url, headers=self.headers)), 0)  # 4h = 144000seg
         return r
-
 
     def get_duplicate(self, id):
         invoice = self.get_invoices(id)

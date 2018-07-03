@@ -70,3 +70,5 @@ response.page.title = appconfig.get('app.name')
 
 T.force(request.uri_language)
 
+
+

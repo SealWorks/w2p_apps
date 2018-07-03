@@ -42,7 +42,7 @@ def iugu_teste_py2():
     # r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
     # return r
     import mymodule
-    l = mymodule.year_month_iterator(from_date='2017-12-01',to_date='2018-01-01')
+    l = mymodule.year_month_list(from_date='2017-12-01', to_date='2018-01-01')
     return locals()
 
 

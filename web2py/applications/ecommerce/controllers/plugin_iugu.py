@@ -36,8 +36,7 @@ def list_invoices():
         Field('due_date', 'date'),
         Field('updated_since', 'date'),
         Field('filtros',
-              requires=IS_IN_SET({'pending', 'paid', 'canceled', 'partially_paid', 'refund', 'expired', 'authorized'},
-                                 multiple=True))
+              requires=IS_IN_SET(iugu.invoice_status, multiple=True))
     )
     page = request.args(0) or 0
     filters = {}
@@ -45,10 +44,14 @@ def list_invoices():
     if form.process(keepvalues=True).accepted:
         for key, value in form.vars.iteritems():
             if value:
-                filters[key] = value
-        iugu_bills = iugu.get_invoices()
+                if key in ['customer_id', 'filtros']:
+                    filters[key] = value
+                else:
+                    from datetime import datetime
+                    filters[key] = datetime.strftime(datetime.strptime(value, "%b %d, %Y"), iugu.date_format)
+
+        iugu_bills = iugu.get_invoices(page=page, filters=filters)
         bills = iugu_bills['items']
-        # print(form.vars) <Storage {'due_date': '', 'paid_at_from': '', 'paid_at_to': '', 'filtros': [], 'created_at_from': '2018-01-01', 'updated_since': '', 'created_at_to': ''}>
     return dict(bills=bills, form=form)
 
 
