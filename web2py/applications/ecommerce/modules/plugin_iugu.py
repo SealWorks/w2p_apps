@@ -25,7 +25,7 @@ class Iugu:
 
         address = {}
         payer = {}
-        payload = {}
+
         for key, value in bill:
             if key.startswith('address_'):
                 address[key[8:]] = value
