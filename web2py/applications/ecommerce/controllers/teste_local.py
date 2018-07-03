@@ -50,8 +50,22 @@ def form_pra_que_te_quero():
                     Field('bicentenarinha', 'decimal(2,4)'),
                     Field('datinha', 'date'),
                     Field('tempinho', 'time'),
-                    Field('segredinho', 'password'),
+                    Field('tipinho'),
+                    )
+    db.define_table('multipla',
+                    Field('stinguinha', 'string'),
+                    Field('textinho', 'text'),
+                    Field('booleaninho', 'boolean'),
+                    Field('interina', 'integer'),
+                    Field('dobradinha', 'double'),
+                    Field('bicentenarinha', 'decimal(2,4)'),
+                    Field('datinha', 'date'),
+                    Field('tempinho', 'time'),
                     Field('tipinho'),
                     )
     form = SQLFORM(db.esclerose)
+    if form.process().accepted:
+        response.flash = "you got it!"
+    if form.errors:
+        response.flash = "all you need is love"
     return dict(form=form)
