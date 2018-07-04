@@ -1,9 +1,45 @@
 # -*- coding: utf-8 -*-
-from gluon.tools import fetch
-import json, base64, urllib
-from datetime import datetime
+import base64
+import json
+import urllib
+from datetime import datetime, timedelta
 from gluon import current
-import mymodule
+from gluon.tools import fetch
+
+
+def year_month_dict(from_date=None, to_date=None, format='%Y-%m-%d'):
+    if from_date is None:
+        from_date = datetime.today()
+        month = from_date.month
+        year = from_date.year
+        start = year * 100 + month
+    else:
+        from_date = datetime.strptime(from_date, format)
+        start = int(from_date.strftime('%Y%m'))
+        month = start % 100
+        year = start / 100
+
+    if to_date is None:
+        to_date = datetime.today()
+        end = to_date.year * 100 + to_date.month
+    else:
+        to_date = datetime.strptime(to_date, format)
+        end = int(to_date.strftime('%Y%m'))
+
+    if start > end:
+        return ValueError.message("from_date cannot be bigger them to_date")
+
+    d = dict()
+    while start <= end:
+        d[str(start)] = {'first_day': datetime(year, month, 01).date()}
+        month += 1
+        if month == 13:
+            year += 1
+            month = 1
+        d[str(start)]['last_day'] = (datetime(year, month, 01).date() + timedelta(days=-1))
+        start = year * 100 + month
+    return d
+
 
 class Iugu:
     url = "https://api.iugu.com/v1/"
@@ -35,15 +71,42 @@ class Iugu:
         return requests.request("POST", url, json=payload, auth=self.auth)
 
     def get_invoices(self, page=0, filters=dict()):
-        filters['limit'] = (page + 1) * 1000
-        if page:
-            filters['start'] = page * 1000
+        # type: (int, dict) -> list
+
+        url = self.url + 'invoices?'
+        payload = {'limit': (page + 1) * 1000, 'start': page * 1000}
+
+        if 'customer_id' in filters:
+            payload['customer_id'] = filters['customer_id']
+            url += urllib.urlencode(payload)
+            return [current.cache.ram(
+                "invoices_ID_" + str(payload['customer_id']),
+                lambda: json.loads(fetch(url, headers=self.headers)),
+                144000  # 4h = 144000seg
+            )]
+
         if 'created_at_from' in filters:
-            x = mymodule.year_month_list(from_date=filters['created_at_from'])
-        print(filters)
-        url = self.url + 'invoices?' + urllib.urlencode(filters)
-        r = current.cache.ram('teste', lambda: json.loads(fetch(url, headers=self.headers)), 0)  # 4h = 144000seg
-        return r
+            if 'created_at_to' in filters:
+                d = year_month_dict(from_date=filters['created_at_from'], to_date=filters['created_at_to'])
+            else:
+                d = year_month_dict(from_date=filters['created_at_from'])
+        elif 'created_at_to' in filters:
+            d = year_month_dict(to_date=filters['created_at_to'])
+        else:
+            url += urllib.urlencode(filters)
+            return [json.loads(fetch(url, headers=self.headers))]
+
+        invoices_monthly = []
+        for key in d:
+            payload['created_at_from'] = d[key]['first_day']
+            payload['created_at_to'] = d[key]['last_day']
+            url = self.url + 'invoices?' + urllib.urlencode(payload)
+            invoices_monthly.append(current.cache.ram(
+                "invoices_CA_" + key,
+                lambda: json.loads(fetch(url, headers=self.headers)),
+                144000  # 4h = 144000seg
+            ))
+        return invoices_monthly
 
     def get_duplicate(self, id):
         invoice = self.get_invoices(id)
@@ -114,3 +177,5 @@ class Iugu:
         #            "default_payment_method_id":"a","custom_variables":[{"name":"a","value":"a","_destroy":"true"}]}
         response = requests.request("PUT", url)
         return response.json()
+
+# _________

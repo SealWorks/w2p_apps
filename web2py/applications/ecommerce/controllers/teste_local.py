@@ -31,20 +31,46 @@ def populate_me():
     return locals()
 
 
-def iugu_teste_py2():
-    # from gluon.tools import fetch
-    # import urllib, base64
-    # url = "https://api.iugu.com/v1/invoices?"
-    # token = appconfig.get("iugu.token")
-    # base64string = base64.encodestring('%s:%s' % (token, "")).replace('\n', '')
-    # data = dict(limit=10)
-    # url += urllib.urlencode(data)
-    # r = fetch(url, headers={'Authorization': "Basic %s" % base64string})
-    # return r
-    import mymodule
-    l = mymodule.year_month_list(from_date='2017-12-01', to_date='2018-01-01')
-    return locals()
+def iugu_teste_py():
+    from gluon.tools import fetch
+    import urllib, base64
+    url = "https://api.iugu.com/v1/invoices?"
+    token = appconfig.get("iugu.token")
+    base64string = base64.encodestring('%s:%s' % (token, "")).replace('\n', '')
+    data = {}
+    data['creat_at_from'] = "2018-07-01"
+    data['limit'] = 10
+    data['start'] = 0
+    url += urllib.urlencode(data)
+    r = json.loads(fetch(url, headers={'Authorization': "Basic %s" % base64string}))
+    return {'url': url, 'r': r}
+    #import mymodule
+    # l = mymodule.year_month_dict(from_date='2017-12-01', to_date='2018-01-01')
+    # return locals()
 
+def test_cache():
+    import time
+    from gluon import current
+    d = {'bool':False}
+    t1 = time.ctime()
+    d = current.cache.ram('t', lambda: func_aux(d), 3)
+    t2 = time.ctime()
+    return dict(time_call=t1,time_return=t2, r=d)
+
+
+def cache_in_ram():
+    import time
+    t = cache.ram('time', lambda: time.ctime(), time_expire=5)
+    d = dict(time=t, link=A('click me', _href=request.url), cache=cache.ram.stats)
+    return response.render(d)
+
+
+def func_aux(d):
+    import time
+    time.sleep(5)
+    d['bool']=True
+    #return datetime.today().strftime("%b %d, %Y")
+    return datetime.today().strftime("%d-%m-%Y")
 
 def form_pra_que_te_quero():
     db.define_table('esclerose',

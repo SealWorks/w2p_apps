@@ -40,7 +40,7 @@ def list_invoices():
     )
     page = request.args(0) or 0
     filters = {}
-    bills = {}
+    iugu_bills = {}
     if form.process(keepvalues=True).accepted:
         for key, value in form.vars.iteritems():
             if value:
@@ -51,8 +51,7 @@ def list_invoices():
                     filters[key] = datetime.strftime(datetime.strptime(value, "%b %d, %Y"), iugu.date_format)
 
         iugu_bills = iugu.get_invoices(page=page, filters=filters)
-        bills = iugu_bills['items']
-    return dict(bills=bills, form=form)
+    return dict(bills=iugu_bills, form=form)
 
 
 def segunda_via():
