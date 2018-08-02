@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import json
+from gluon import cache
 
 from gluon.tools import fetch
 
